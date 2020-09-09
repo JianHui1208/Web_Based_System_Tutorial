@@ -2,7 +2,7 @@
 @section('content') 
 <div class="container">
 	    <div class="row">
-		<form   method="post" action="{!! URL::to('paypal')!!}" >
+		<form   method="post" action="{!! URL::to('paypal') !!}">
 			{{ csrf_field() }}
 		    <table class="table table-hover table-striped">
 				
@@ -47,7 +47,7 @@
 		        <td>&nbsp;</td>
 		        <td>&nbsp;</td>
 				<td><input type="hidden" name="amount" value="{{ $total }}"></td>
-                <td><input type="submit" name="paynow" value="Pay Now"></td>
+                <td><form action="{{ route('delete.order') }}" method="post">{{ csrf_field() }}<input type="submit" name="paynow" value="Pay Now"></form></td>
 		    </tr>
 		</form>	
 				
@@ -60,3 +60,4 @@
 	</div>
     </div>
 @endsection
+

@@ -27,8 +27,9 @@ class OrderController extends Controller
             'paymentStatus'=>'pending',
             'userID'=>Auth::id(),
         ]);
-        $orderID=DB::table('my_orders')->where('userID','=',Auth::id())->orderBy('created_at', 'desc')->first(); //get the lastest order ID        
-        
+        $orderID=DB::table('my_orders')->where('userID','=',Auth::id())
+                                        ->orderBy('created_at', 'desc')
+                                            ->first(); //get the lastest order ID
         $items=$r->input('item');
         //foreach($array as $arrayindex => $arrayvalue)
         foreach($items as $item => $value){
@@ -49,5 +50,16 @@ class OrderController extends Controller
         ->get();
         //->paginate(3);       
         return view('myOrder')->with('myorders',$myorders);
+    }
+
+    public function delete(){
+        $myorders=DB::table('my_orders')
+        ->leftjoin('my_carts', 'my_orders.id', '=', 'my_carts.orderID')
+        ->leftjoin('products', 'products.id', '=', 'my_carts.productID')
+        ->select('my_carts.*','my_orders.*','products.*','my_carts.quantity as qty')
+        ->where('my_orders.userID','=',Auth::id())
+        ->get();
+        $myorders=DB::table('my_orders')
+        ->truncate();
     }
 }

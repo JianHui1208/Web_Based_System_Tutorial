@@ -121,6 +121,11 @@ Route::get('/myorder',[
     'as' => 'my.order'
 ]);
 
+Route::post('/myorder/delete',[
+    'uses'=>'OrderController@delete', 
+    'as'=>'delete.order'
+]);
+
 // route for processing payment
 Route::post('paypal', 'PaymentController@payWithpaypal');
 
