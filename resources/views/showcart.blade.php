@@ -1,19 +1,16 @@
 @extends('layouts.app') @section('content')
 <script>
 function Cal() {
-	
 	var prices = document.getElementsByName('price[]');
-	
-	var total=0;
-	
 	var cboxes = document.getElementsByName('item[]');    
-	var len = cboxes.length;	    
+	var len = cboxes.length;
+    var subtotal = 0;
 	for (var i=0; i<len; i++) {        
 		if(cboxes[i].checked){	//calculate if checked		
-			subtotal=parseFloat(prices[i].value)+parseFloat(total);	}					
+			subtotal+=parseFloat(prices[i].value);	
+        }					
 	}
-	total=subtotal+total;
-	document.getElementById('amount').value=total.toFixed(2);
+	document.getElementById('amount').value=subtotal.toFixed(2);
 }
 </script>
 <div class="container">
@@ -39,6 +36,7 @@ function Cal() {
                                 type="checkbox"
                                 name="item[]"
                                 value="{{$cart->cid}}"
+                                onchange="Cal()"
                             />
                         </td>
                         <td>
@@ -52,7 +50,9 @@ function Cal() {
                             <h6>{{$cart->name}}</h6>
                         </td>
                         <td>{{$cart->qty}}</td>
-                        @php $subtotal = $cart->qty*$cart->price @endphp
+                        @php 
+                            $subtotal = $cart->qty*$cart->price 
+                        @endphp
                         <td>RM {{$subtotal}}</td>
                         <input type="hidden" value="{{$subtotal}}" name="price[]" id="price[]">
                         <td>
