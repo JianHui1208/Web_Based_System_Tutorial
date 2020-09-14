@@ -12,7 +12,7 @@ use Session;
 class ProductController extends Controller
 {
     public function create(){
-        return view('insertProduct') ->with('categories',Category::all());;
+        return view('insertProduct')->with('categories',Category::all());;
     }
     //Category::all() means "select * from category"
 
