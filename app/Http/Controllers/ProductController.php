@@ -65,21 +65,18 @@ class ProductController extends Controller
     public function update(){
         $r=request();
         $products =Product::find($r->ID);
-        
         if($r->file('product-image')!=''){
             $image=$r->file('product-image');        
             $image->move('images',$image->getClientOriginalName());                   
             $imageName=$image->getClientOriginalName(); 
             $products->image=$imageName;
             }    
-        
         $products->name=$r->title;
         $products->description=$r->Description;
         $products->price=$r->price;
         $products->quantity=$r->Quantity;
         $products->categoryID=$r->category_id;
         $products->save();
-
         return redirect()->route('all.product');
     }
 
